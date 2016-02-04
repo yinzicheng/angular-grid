@@ -1,0 +1,17 @@
+<li ng-class="getSpecNodeClass(specNode)">
+    <div>
+        {{ specNode.description }} &nbsp;
+        <span class="label">{{ specNode.status | uppercase }}</span>
+        <span class="badge">{{ specNode.failedExpectations.length | toBlank }}</span>
+    </div>
+
+    <div ng-show="specNode.failedExpectations.length>0">
+        <div class="failedExpectation"
+             ng-repeat="failedExpectation in specNode.failedExpectations">
+            <span class="glyphicon glyphicon-remove"></span>
+            <span ng-repeat="failedMsgPart in failedExpectationToArray(failedExpectation)">
+             {{ failedMsgPart }} &nbsp;&nbsp;&nbsp;
+            </span>
+        </div>
+    </div>
+</li>

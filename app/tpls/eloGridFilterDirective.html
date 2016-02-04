@@ -1,0 +1,40 @@
+<ng-form name="{{ table.tableName }}" novalidate class="row">
+
+
+  <div class="form-group row" ng-repeat="column in filterColumns" ng-switch on="column.model.type">
+
+    <label class="col-md-3">{{ column.name }}:
+
+      <div ng-switch-when="Text">
+        <input type="text" class="form-control" placeholder="{{ column.name }}" ng-model="column.model.value">
+      </div>
+
+      <div ng-switch-when="Option">
+        <select class="form-control" ng-model="column.model.selectedOption"
+                ng-options="option as option[column.model.dbColMap.label] for option in column.model.options track by option[column.model.dbColMap.value]">
+          <option value="">Select a {{ column.name }}</option>
+        </select>
+      </div>
+
+      <div ng-switch-when="Date">
+        <date-picker date="column.model.value"></date-picker>
+      </div>
+
+    </label>
+
+  </div>
+
+  <div class="form-group">
+    <input class="btn btn-info col-md-1" type="button" value="Search"
+           ng-click="filterFn()"/>
+    <input class="btn btn-warning col-md-1" type="button" value="Reset"
+           ng-click="resetFn()"/>
+    <input class="btn btn-primary col-md-1" type="button" value="Add"
+           ng-click="addFn()"/>
+  </div>
+
+
+</ng-form>
+
+
+

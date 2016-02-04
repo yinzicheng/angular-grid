@@ -1,0 +1,50 @@
+<div class="modal-header">
+  <h3 class="modal-title">{{ title }}</h3>
+</div>
+
+<div class="modal-body">
+
+  <form name="modalForm" novalidate>
+    <div class="form-group" ng-repeat="column in modalColumns" ng-switch on="column.model.type"
+         ng-if="isDisplayableField(column)">
+      <label class="control-label col-md-offset-1">{{ column.name }}:
+
+        <div ng-switch-when="Text">
+          <input type="text" name="{{ column.field }}" class="form-control" ng-model="record[column.field]"
+                 ng-readonly="isReadOnlyField(column)"
+                 ng-required="true" ng-minlength="6" show-errors="{ showSuccess: true }"/>
+        </div>
+
+        <div ng-switch-when="Option">
+          <select class="form-control" name="{{ column.field }}" ng-model="record[column.field]"
+                  ng-options="option as option[column.model.dbColMap.label] for option in column.model.options track by option[column.model.dbColMap.value]"
+                  ng-readonly="isReadOnlyField(column)"
+                  ng-required="true" show-errors="{ showSuccess: true }">
+
+            <option value="">Select a {{ column.name }}</option>
+          </select>
+        </div>
+
+        <div ng-switch-when="Date">
+          <date-picker name="{{ column.field }}" date="record[column.field]"
+                       readonly-field="isReadOnlyField(column)" ng-required="true"
+                       show-errors="{ showSuccess: true }"></date-picker>
+        </div>
+
+      </label>
+    </div>
+
+    <div class="modal-footer">
+      <input class="btn btn-primary" type="submit" value="Save" ng-click="save()"/>
+      <button class="btn btn-default" type="button" ng-click="cancel()">Cancel</button>
+      <button class="btn btn-danger" type="button" okcallback="delete()"
+              show-confirm="{title:'Confirm to Delete', message:'Are you sure to delete this record?'}">Delete
+      </button>
+    </div>
+
+  </form>
+
+  <!--{{ modalForm.$error }}-->
+</div>
+
+

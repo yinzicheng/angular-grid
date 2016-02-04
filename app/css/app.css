@@ -1,0 +1,60 @@
+/*set grid size*/
+.myGrid {
+    width: 800px;
+    height: 300px;
+    margin: 20px 0;
+}
+
+/*add for UI Bootstrap*/
+.nav, .pagination, .carousel, .panel-title a {
+    cursor: pointer;
+}
+
+.failedExpectation {
+    position: relative;
+    display: inline-block;
+    padding: 0px 0px;
+    margin: 1px 10px;
+    font-weight: 300;
+    color: #e73242;
+}
+
+.glyphicon {
+    top: 0;
+}
+
+/**
+** for bootstrap css
+**/
+.form-group .help-block {
+    display: none;
+}
+
+.form-group.has-error .help-block {
+    display: block;
+}
+
+.flyover {
+    overflow: hidden;
+    position: fixed;
+    /*opacity: 0.5;*/
+    z-index: 1050;
+    left: 35%;
+    width: 30%;
+    top: 0
+}
+
+.maskDiv {
+    position: fixed;
+    z-index: 999;
+    background-color: #272727;
+    opacity: 0.2;
+    overflow: visible;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+

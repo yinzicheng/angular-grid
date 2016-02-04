@@ -1,0 +1,19 @@
+<div>
+
+  <script type="text/ng-template" id="alert.html">
+    <div class="alert flyover fade in" ng-class="{'alert-success': type=='success', 'alert-danger': type=='danger'}"
+         role="alert">
+      <p><span class="glyphicon"
+               ng-class="{'glyphicon-ok': type=='success', 'glyphicon-remove': type=='danger'}"></span> <span
+              ng-transclude></span></p>
+    </div>
+  </script>
+
+
+  <uib-alert template-url="alert.html" ng-repeat="alert in alerts" close="alert.close()" type="{{alert.type}}"
+             dismiss-on-timeout="1500">
+    {{alert.msg}}
+  </uib-alert>
+
+
+</div>

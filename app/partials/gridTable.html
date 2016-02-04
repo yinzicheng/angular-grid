@@ -1,0 +1,9 @@
+<div ng-controller="gridController" class="container">
+
+  <grid-filter filter-columns="filterColumns" table="table" filter-fn="getPageByFilter()"
+               reset-fn="reset()" add-fn="addItem()"></grid-filter>
+
+  <div ui-grid="gridOptions" class="myGrid" ui-grid-resize-columns
+       ui-grid-selection ui-grid-pagination></div>
+
+</div>
