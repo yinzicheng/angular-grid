@@ -1,113 +1,108 @@
 (function () {
   angular.module('elo.grid.table', [])
-    .service('eloTables', function (appConfig) {
-      var modelType = appConfig.colModelType;
+
+    .constant('tableConfig', {
+      colModelType: {
+        text: "Text",
+        option: "Option",
+        date: "Date"
+      }
+    })
+    .service('eloTables', function (tableConfig) {
+      var modelType = tableConfig.colModelType;
 
       this.tables = [
         {
-          tableName: "AuditTrail",
-          title: "AuditTrail",
+          tableName: "RMFiles",
+          title: "RM Files",
           //active: true,
           columns: [
             {
-              name: 'ID',
-              field: 'id',
-              width: 60,
+              name: 'ObjId',
+              field: 'objId',
+              width: 65,
               enableColumnResizing: false
             }, {
-              name: 'Activity Code',
-              field: 'activityCode',
-              cellTemplate: '<div class="ui-grid-cell-contents">{{grid.appScope.activityCode(grid, row)}}</div>',
-              model: {
-                type: modelType.option,
-                options: [],
-                selectedOption: {},
-                dbColMap: {label: 'value', value: 'id'} //map for option in FormModal, db column on the right
-              },
-              filter: true, // if in the filter form (search)
-              modal: {       // if in the modal form (update/new)
-                edit: {display: true, readonly: false},
-                add: {display: true, readonly: false}
-              }
-
+              name: 'Short Name',
+              field: 'shortName'
             }, {
-              name: 'Description',
-              field: 'description',
-              model: {type: modelType.text},
-              filter: true,
-              modal: {
-                edit: {display: true, readonly: false},
-                add: {display: true, readonly: false}
-              }
+              name: 'File Num',
+              field: 'FILENUM'
             }, {
-              name: 'Old Value',
-              field: 'oldValue',
-              model: {type: modelType.text},
-              filter: true,
-              modal: {
-                edit: {display: true, readonly: false},
-                add: {display: true, readonly: false}
-              }
+              name: 'File Part Num',
+              field: 'FILEPARTNUM'
             }, {
-              name: 'New Value',
-              field: 'newValue',
-              model: {type: modelType.text},
-              filter: true,
-              modal: {
-                edit: {display: true, readonly: false},
-                add: {display: true, readonly: false}
-              }
+              name: 'BCS Level 1',
+              field: 'BCSLEVEL1'
             }, {
-              name: 'Added DateTime',
-              field: 'addedDateTime',
-              cellTemplate: '<div class="ui-grid-cell-contents">{{grid.appScope.addedDateTime(grid, row)}}</div>',
-              model: {
-                type: modelType.date,
-                value: ''//new Date() // default value
-              },
-              filter: true,
-              modal: {
-                edit: {display: false, readonly: true},
-                add: {display: true, readonly: false}
-              }
+              name: 'BCS Level 2',
+              field: 'BCSLEVEL2'
+            }, {
+              name: 'BCS Level 3',
+              field: 'BCSLEVEL3'
+            }, {
+              name: 'BCS Level 4',
+              field: 'BCSLEVEL4'
+            }, {
+              name: 'BCS Level 5',
+              field: 'BCSLEVEL5'
+            }, {
+              name: 'BCS Level 6',
+              field: 'BCSLEVEL6'
+            }, {
+              name: 'File Title',
+              field: 'FILETITLE'
+            }, {
+              name: 'Home Location',
+              field: 'FILEHOMELOC'
+            }, {
+              name: 'Current Location',
+              field: 'FILECURRLOC'
+            }, {
+              name: 'Closed Date',
+              field: 'FILECLOSEDATE'
+            }, {
+              name: 'Disposal Date',
+              field: 'FILEDISPOSALDATE'
+            }, {
+              name: 'Disposal Status',
+              field: 'FILEDISPSTATUS'
+            }, {
+              name: 'Disposal Actioned Date',
+              field: 'FILEDISPACTIONDATE'
+            }, {
+              name: 'Disposal Code',
+              field: 'FILEDACODE'
+            }, {
+              name: 'Disposal Trigger Type',
+              field: 'FILEDTTYPE'
+            }, {
+              name: 'Disposal Action',
+              field: 'FILEDISACTION'
+            }, {
+              name: 'Disposal Classification',
+              field: 'FILEDISCLASS'
+            }, {
+              name: 'Retention Review Date',
+              field: 'FILERETENTIONREVDATE'
             }
-          ]
-        },
-        {
-          tableName: "BCS",
-          title: "RM BCS",
-          //active: false,
-          columns: [
-            {
-              name: 'ID',
-              field: 'id',
-              width: 60,
-              enableColumnResizing: false
-            }, {
-              name: 'BCS Level1',
-              field: 'bcsLevel1',
-              width: 200,
-              model: {type: modelType.text},
-              filter: true,
-              modal: {
-                edit: {display: true, readonly: false},
-                add: {display: true, readonly: false}
-              }
-            }, {
-              name: 'BCS Level2',
-              field: 'bcsLevel2',
-              width: 200,
-              model: {type: modelType.text},
-              filter: true,
-              modal: {
-                edit: {display: true, readonly: false},
-                add: {display: true, readonly: false}
-              }
-            }
-
           ]
         }
       ];
+
+      this.setDefaultColumnProp = function (propName, propValue) {
+        this.tables.forEach(function (table) {
+          if (table.columns && table.columns.length > 0) {
+            table.columns.forEach(function (column) {
+              if (!column[propName]) {
+                column[propName] = propValue;
+              }
+            });
+          }
+        });
+      };
+
+      this.setDefaultColumnProp('width', '100');
 
     })
 

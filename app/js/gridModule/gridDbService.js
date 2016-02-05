@@ -1,14 +1,13 @@
 (function () {
 
-  angular.module('elo.grid.dbService', ['appConfig'])
-    //.config(['crudServiceProvider', function (crudServiceProvider, appConfig) {
-    //  crudServiceProvider.restUrlBase = '';//appConfig.restUrlBase;
-    //  crudServiceProvider.restUrlId = '';//appConfig.id;
-    //  //crudServiceProvider.restUrlTable = "AuditTrail";
-    //}])
+  angular.module('elo.grid.dbService', [])
+    .config(function (crudServiceProvider, appConfig) {
+      crudServiceProvider.restUrlBase = appConfig.restUrlBase;
+      //crudServiceProvider.restUrlId = appConfig.id;
+    })
 
-    .service('gridDbService', function (crudService, $log, gridColumnService, appConfig, $uibModal, $filter, alertService, spinnerService) {
-      var modelType = appConfig.colModelType;
+    .service('gridDbService', function (crudService, $log, gridColumnService, tableConfig, $uibModal, $filter, alertService, spinnerService) {
+      var modelType = tableConfig.colModelType;
 
       //store search records from db
       var _dbData = null;
@@ -160,12 +159,20 @@
       };
 
       function _getAllRecords(options, gridOptions) {
-        crudService.getAll(options, function (data) {
-          gridOptions.totalItems = data.pop();//get total count
-          _dbData = gridOptions.data = data;// get data array
+        options = {
+          params: {
+            filetype: "General File",
+            disposalStatus: "Destroyed"
+          }
+        };
+
+        crudService.getDataByUrl('/findDisposalInfo', options, function (response) {
+          var respObj = response.data;
+          gridOptions.totalItems = respObj.totalCount;//get total count
+          _dbData = gridOptions.data = respObj.data;// get data array
         }, function (error) {
-          $log(error.statusText + ": " + error.data);
-        });
+          $log.error(error.status + ": " + error.data);
+        })
       }
 
 

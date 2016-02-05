@@ -2,42 +2,44 @@
 
   angular.module('elo.grid.controller', [])
 
-      .controller('appController', function ($scope, $log, gridTableService, alertService) {
+    .controller('appController', function ($scope, $log, gridTableService, alertService, appConfig) {
 
-        $scope.alerts = alertService.get();
+      $scope.appName = appConfig.appName;
 
-        var tables = $scope.tables = gridTableService.tables;
+      $scope.alerts = alertService.get();
 
-        $scope.changeTable = function (tableName) {
-          var activeTableName = gridTableService.getActiveTableName();
-          if (activeTableName != tableName) {
-            activeTableName = tableName;
-            gridTableService.setActiveTable(activeTableName);
-          }
-        };
+      var tables = $scope.tables = gridTableService.tables;
 
-      })
+      $scope.changeTable = function (tableName) {
+        var activeTableName = gridTableService.getActiveTableName();
+        if (activeTableName != tableName) {
+          activeTableName = tableName;
+          gridTableService.setActiveTable(activeTableName);
+        }
+      };
 
-      .controller('gridController', function ($scope, gridTableService, gridDbService, $stateParams, $state) {
+    })
+
+    .controller('gridController', function ($scope, gridTableService, gridDbService, $stateParams, $state) {
 
 
-        $scope.getPageByFilter = function () {
-          gridDbService.getPageByFilter($scope.paginationOptions, $scope.gridOptions);
-        };
+      $scope.getPageByFilter = function () {
+        gridDbService.getPageByFilter($scope.paginationOptions, $scope.gridOptions);
+      };
 
-        $scope.reset = function () {
-          $state.reload(); //reload current (ui-view's) controller
-        };
+      $scope.reset = function () {
+        $state.reload(); //reload current (ui-view's) controller
+      };
 
-        $scope.addItem = function () {
-          var modalColumns = gridTableService.getModalColumns($scope.columns);
-          gridDbService.openFormModal(null, $scope.table, modalColumns);
-        };
+      $scope.addItem = function () {
+        var modalColumns = gridTableService.getModalColumns($scope.columns);
+        gridDbService.openFormModal(null, $scope.table, modalColumns);
+      };
 
-        var tableName = $stateParams.tableName || gridTableService.tables[0].tableName;
-        gridTableService.initGridTable(tableName, $scope);
+      var tableName = $stateParams.tableName || gridTableService.tables[0].tableName;
+      gridTableService.initGridTable(tableName, $scope);
 
-      });
+    });
 
 })();
 

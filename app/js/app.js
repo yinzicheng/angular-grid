@@ -2,26 +2,9 @@
 
   angular.module("disposalReports", ['ui.grid', 'ui.grid.resizeColumns', 'ui.grid.selection', 'ui.grid.pagination', 'angularSpinner',
     'ngAnimate', 'ui.bootstrap', 'ui.router',
-     'elo.comm.directive', 'elo.comm.crud', 'elo.comm.uiService',
+    'appConfig', 'elo.comm.directive', 'elo.comm.crud', 'elo.comm.uiService',
     'elo.grid.directive', 'elo.grid.tableService', 'elo.grid.tableValidation', 'elo.grid.table', 'elo.grid.dbService', 'elo.grid.controller'
   ])
-
-    .constant('appConfig', {
-      appName: "Disposal Report",
-      restUrlBase: 'http://localhost:8888',
-      restUrlId: 'id',
-      colModelType: {
-        text: "Text",
-        option: "Option",
-        date: "Date"
-      }
-    })
-
-    .config(['crudServiceProvider', function (crudServiceProvider, appConfig) {
-      crudServiceProvider.restUrlBase = '';//appConfig.restUrlBase;
-      crudServiceProvider.restUrlId = '';//appConfig.id;
-      //crudServiceProvider.restUrlTable = "AuditTrail";
-    }])
 
     .config(function ($stateProvider, $urlRouterProvider) {
       $stateProvider
